@@ -12,10 +12,11 @@ namespace Storage.Data
     {
         public StorageContext (DbContextOptions<StorageContext> options)
             : base(options)
-        {
+        {   
         }
 
         // Denna property använder vi oss av för att hämta data från databasen
         public DbSet<Storage.Models.Product> Product { get; set; } = default!;
+    // En klass som använder sig av EntityFramework(ORM mappar mellan databasen och vår C# kod).
     }
 }

@@ -26,6 +26,24 @@ namespace Storage.Controllers
             return View(await _context.Product.ToListAsync());
         }
 
+        public async Task<IActionResult> Search(string category)
+        {
+            List<Product> results;
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                results = await _context.Product
+                    .Where(p => p.Category.Contains(category))
+                    .ToListAsync();
+            }
+            else
+            {
+                results = await _context.Product.ToListAsync();
+            }
+
+            return View("Index", results);
+        }
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -148,6 +166,21 @@ namespace Storage.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<ActionResult> Summarize()
+        {
+            IEnumerable<ProductViewModel> results = await _context.Product
+              .Select(p => new ProductViewModel
+              {
+                  Name = p.Name,
+                  Price = p.Price,
+                  Count = p.Count,
+                  InventoryValue = p.Price * p.Count
+              })
+              .ToListAsync();
+            return View(results);
+
         }
 
         private bool ProductExists(int id)

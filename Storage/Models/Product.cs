@@ -13,9 +13,9 @@ namespace Storage.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "A price must be set")]
-        [Range(0.01, 2000.00,
-            ErrorMessage = "Price must be between 0.01 and 2000.00")]
-        public double Price { get; set; }
+        [Range(1, 2000,
+            ErrorMessage = "Price must be between 1 and 2000")]
+        public int Price { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
